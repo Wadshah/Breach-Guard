@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Breach Guard — Offensive security & red team services</title>
+  <meta name="description" content="Breach Guard — Web, Network, Mobile, Source Code Reviews and Red Team exercises">
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- AOS (Animate on Scroll) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0f12;
+    --card:#121a23;
+    --muted:#b3c0cc;
+    --accent:#00ff88;
+    --glass: rgba(255,255,255,0.05);
+  }
+
+  html,body{height:100%}
+  body{
+    background: radial-gradient(ellipse at top right, rgba(0,255,136,0.05), transparent 25%),
+                linear-gradient(180deg,#071018 0%,var(--bg) 100%);
+    color:#f2f7f8;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* Navbar */
+  .navbar-brand{font-weight:700; letter-spacing:0.4px; color:var(--accent)!important}
+  .nav-link{color:var(--muted)!important; transition:color .2s}
+  .nav-link:hover{color:#fff!important}
+
+  /* Hero */
+  .hero{
+    min-height:80vh;
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .headline{font-weight:700; color:#fff}
+  .tagline{color:var(--accent)}
+  #particles-js{position:absolute; inset:0; z-index:0; opacity:0.12}
+  .hero-content{position:relative; z-index:2}
+
+  /* Cards */
+  .service-card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.1));
+    border:1px solid rgba(0,255,136,0.1);
+    border-radius:1rem;
+    transition: transform .2s, box-shadow .3s, border .3s;
+  }
+  .service-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 0 24px rgba(0,255,136,0.15);
+    border-color:rgba(0,255,136,0.4);
+  }
+
+  h3,h5,h6{
+    color:#fff;
+    font-weight:600;
+  }
+  .text-secondary{
+    color:var(--muted)!important;
+  }
+
+  .accent-pill{
+    background:linear-gradient(90deg, rgba(0,255,136,0.12), rgba(0,255,136,0.05));
+    color:var(--accent);
+    font-weight:600;
+    border-radius:.6rem;
+    padding:.25rem .6rem;
+  }
+
+  .counter{font-size:1.8rem; font-weight:700; color:var(--accent)}
+
+  .footer{
+    border-top:1px solid rgba(255,255,255,0.05);
+    padding-top:1.2rem;
+  }
+
+  /* Buttons */
+  .btn-outline-light:hover{
+    background-color:var(--accent);
+    border-color:var(--accent);
+    color:#000;
+  }
+  .btn-outline-success:hover{
+    background-color:var(--accent);
+    border-color:var(--accent);
+    color:#000;
+  }
+
+  /* Inputs */
+  .form-control{
+    background-color:#0e141b;
+    border-color:rgba(255,255,255,0.1);
+    color:#fff;
+  }
+  .form-control:focus{
+    box-shadow:0 0 0 .15rem rgba(0,255,136,0.2);
+    border-color:rgba(0,255,136,0.4);
+  }
+
+  /* Responsive */
+  @media(min-width:992px){
+    .hero{min-height:82vh}
+  }
+</style>
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
+  <div class="container">
+    <a class="navbar-brand" href="#">Breach Guard</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navCollapse">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="#why">Why Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item ms-3"><a class="btn btn-outline-success btn-sm" href="#contact">Get in touch</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="particles-js"></canvas>
+  <div class="container hero-content">
+    <div class="row align-items-center">
+      <div class="col-lg-7" data-aos="fade-right">
+        <p class="accent-pill mb-3">Offensive Security • Red Team • Code Audit</p>
+        <h1 class="display-5 headline">Breach Guard</h1>
+        <p class="lead my-3">We identify, exploit, and help you fix the security gaps before attackers do.</p>
+        <h5>We specialize in <span id="typed" class="tagline"></span></h5>
+
+        <div class="mt-4">
+          <a href="#services" class="btn btn-lg btn-success me-2">Our Services</a>
+          <a href="#contact" class="btn btn-outline-light btn-lg">Request Quote</a>
+        </div>
+      </div>
+
+      <div class="col-lg-5 text-center" data-aos="zoom-in">
+        <div class="card service-card p-4" style="max-width:420px; margin:auto;">
+          <div class="d-flex align-items-center gap-3">
+            <div class="bg-dark rounded-circle p-3" style="border:1px solid rgba(255,255,255,0.03)">
+              <i class="fa-solid fa-shield-halved fa-2x" style="color:var(--accent)"></i>
+            </div>
+            <div>
+              <h5 class="mb-1">Trusted Red Team Experts</h5>
+              <p class="mb-0" style="color:var(--muted)">Real-world attack simulations, tailored to your environment.</p>
+            </div>
+          </div>
+          <hr class="my-3 border-light">
+          <div class="d-flex justify-content-between">
+            <div>
+              <div class="counter" data-target="64" data-suffix="+">0</div>
+
+              <small style="color:var(--muted)">Engagements</small>
+            </div>
+            <div>
+              <div class="counter" data-target="120">0</div>
+              <small style="color:var(--muted)">Apps Tested</small>
+            </div>
+            <div>
+              <div class="counter" data-target="6">0</div>
+              <small style="color:var(--muted)">Years of Total Experience</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-5">
+  <div class="container" data-aos="fade-up">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-6">
+        <h3>About Breach Guard</h3>
+        <p class="text-secondary">Breach Guard is an offensive-first security firm delivering web, network, mobile, and source-code assessments, plus comprehensive red team operations. We combine deep technical skills with actionable reporting and remediation guidance.</p>
+        <ul class="list-unstyled" style="color:var(--muted)">
+          <li><i class="fa-solid fa-check me-2" style="color:var(--accent)"></i>Realisting timelines on ETA</li>
+          <li><i class="fa-solid fa-check me-2" style="color:var(--accent)"></i>Speacilly hand crafted to meet your business infra needs</li>
+          <li><i class="fa-solid fa-check me-2" style="color:var(--accent)"></i>We discover if your credentials are exposed on the dark web — before attackers do.</li>
+        </ul>
+      </div>
+      <div class="col-lg-6">
+        <div class="card p-4 service-card">
+          <div class="card p-4 service-card">
+  <h5 class="text-light mb-3">Why Choose <span style="color:var(--accent)">Breach Guard?</span></h5>
+ <p class="text-secondary mb-3">
+  We focus on finding your <span style="color:var(--accent); text-shadow:0 0 8px rgba(0,255,136,0.6); font-weight:600;">leakages</span>
+  through real-world attack simulations 
+  <span style="color:var(--accent); text-shadow:0 0 8px rgba(0,255,136,0.6); font-weight:600;">quickly</span> 
+  and strengthening your overall security posture with actionable remediation guidance.
+</p>  <ul class="list-unstyled" style="color:var(--muted)">
+    <li><i class="fa-solid fa-user-shield me-2" style="color:var(--accent)"></i> Offensive-first experts with OSCP, CRTO & CEH certifications</li>
+    <li><i class="fa-solid fa-bug-slash me-2" style="color:var(--accent)"></i> Real-world adversary emulation and exploit development</li>
+    <li><i class="fa-solid fa-book-open-reader me-2" style="color:var(--accent)"></i> Clear, actionable remediation reports and knowledge transfer</li>
+    <li><i class="fa-solid fa-lock me-2" style="color:var(--accent)"></i> Confidential, NDA-backed engagements for every client</li>
+  </ul>
+</div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="py-5 bg-transparent">
+  <div class="container" data-aos="fade-up">
+    <div class="text-center mb-4">
+      <h3>Services</h3>
+      <p class="text-secondary">Select a card to learn more — engagements are scoped and customizable.</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Service card sample (repeat) -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="50">
+        <div class="card service-card p-4 h-100">
+          <div class="d-flex align-items-start">
+            <i class="fa-solid fa-globe fa-2x me-3" style="color:var(--accent)"></i>
+            <div>
+              <h5>Web App Penetration Testing</h5>
+              <p class="text-secondary mb-3">Full-stack web app testing (auth, business logic, APIs, GraphQL).</p>
+              <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#mWeb">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="card service-card p-4 h-100">
+          <div class="d-flex align-items-start">
+            <i class="fa-solid fa-sitemap fa-2x me-3" style="color:var(--accent)"></i>
+            <div>
+              <h5>Network Security Assessment</h5>
+              <p class="text-secondary mb-3">External & internal assessments, segmentation testing, cloud network checks.</p>
+              <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#mNet">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="card service-card p-4 h-100">
+          <div class="d-flex align-items-start">
+            <i class="fa-solid fa-mobile-screen-button fa-2x me-3" style="color:var(--accent)"></i>
+            <div>
+              <h5>Mobile App Testing</h5>
+              <p class="text-secondary mb-3">iOS & Android testing: SAST/DAST, insecure storage, inter-app communication.</p>
+              <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#mMobile">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="card service-card p-4 h-100">
+          <div class="d-flex align-items-start">
+            <i class="fa-solid fa-code fa-2x me-3" style="color:var(--accent)"></i>
+            <div>
+              <h5>Source Code Review</h5>
+              <p class="text-secondary mb-3">Manual and tool-assisted reviews for critical business logic and secrets.</p>
+              <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#mCode">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="250">
+        <div class="card service-card p-4 h-100">
+          <div class="d-flex align-items-start">
+            <i class="fa-solid fa-skull-crossbones fa-2x me-3" style="color:var(--accent)"></i>
+            <div>
+              <h5>Red Team Operations</h5>
+              <p class="text-secondary mb-3">Full-scope adversary emulation, lateral movement, persistence & exfil simulation.</p>
+              <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#mRed">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why" class="py-5">
+  <div class="container" data-aos="fade-up">
+    <div class="row g-4 align-items-center">
+      <div class="col-md-6">
+        <h3>What makes us different</h3>
+        <p class="text-secondary">We pair offensive depth with clear remediation. Our objective is to reduce risk quickly and measurably while transferring knowledge to your engineering teams.</p>
+        <ul style="color:var(--muted)">
+          <li><i class="fa-solid fa-user-check me-2" style="color:var(--accent)"></i>Clear, prioritized remediation reports</li>
+          <li><i class="fa-solid fa-trophy me-2" style="color:var(--accent)"></i>Experienced testers with threat emulation</li>
+          <li><i class="fa-solid fa-lock-open me-2" style="color:var(--accent)"></i>Hands-on verification of fixes</li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-4 service-card">
+          <div class="row text-center">
+            <div class="col-4">
+              <div class="counter" data-target="98">0</div>
+              <small style="color:var(--muted)">Remediations Verified</small>
+            </div>
+            <div class="col-4">
+              <div class="counter" data-target="24">0</div>
+              <small style="color:var(--muted)">Industries</small>
+            </div>
+            <div class="col-4">
+              <div class="counter" data-target="400">0</div>
+              <small style="color:var(--muted)">Findings Triaged</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-5">
+  <div class="container" data-aos="fade-up">
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <h3>Contact Us</h3>
+        <p class="text-secondary">Tell us about your environment and objectives — we’ll get back with a scope and estimate.</p>
+        <form id="contactForm" class="mt-3 needs-validation" novalidate>
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input required type="text" class="form-control" id="name">
+            <div class="invalid-feedback">Please enter your name.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Company / Org</label>
+            <input type="text" class="form-control" id="org">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input required type="email" class="form-control" id="email">
+            <div class="invalid-feedback">Please enter a valid email.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea required class="form-control" rows="5" id="message"></textarea>
+            <div class="invalid-feedback">Tell us briefly about your security needs.</div>
+          </div>
+          <button type="submit" class="btn btn-success">Send message</button>
+          <div id="formAlert" class="mt-3" style="display:none"></div>
+        </form>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card p-4 service-card">
+          <h5>Office</h5>
+          <p class="text-secondary mb-1">Breach Guard — Security Labs</p>
+          <p class="text-secondary mb-0">Email: <a href="mailto:hello@breachguard.example" style="color:var(--accent)">hello@breachguard.example</a></p>
+          <hr class="my-3">
+          <h6>Follow</h6>
+          <div class="d-flex gap-2">
+            <a class="btn btn-outline-light btn-sm" href="#" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            <a class="btn btn-outline-light btn-sm" href="#" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a class="btn btn-outline-light btn-sm" href="#" title="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-4 footer">
+  <div class="container text-center">
+    <small class="text-secondary">© <span id="yr"></span> Breach Guard. All rights reserved.</small>
+  </div>
+</footer>
+
+<!-- Modals for service details -->
+<!-- Web Modal -->
+<div class="modal fade" id="mWeb" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content bg-dark text-light p-3">
+  <div class="modal-header border-0"><h5 class="modal-title">Web Application Penetration Testing</h5><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <ul>
+      <li>OWASP Top 10 & business logic testing</li>
+      <li>API, GraphQL & microservice analysis</li>
+      <li>Auth, session management, SSRF, SQLi, XSS checks</li>
+      <li>Exploit PoC, remediation guidance, and retest</li>
+    </ul>
+  </div>
+</div></div></div>
+
+<!-- Network Modal -->
+<div class="modal fade" id="mNet" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content bg-dark text-light p-3">
+  <div class="modal-header border-0"><h5 class="modal-title">Network Security Assessment</h5><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <ul>
+      <li>External & internal scanning, firewall & segmentation testing</li>
+      <li>VPN, remote access, cloud networking review</li>
+      <li>Host-level hardening checks and lateral movement simulation</li>
+    </ul>
+  </div>
+</div></div></div>
+
+<!-- Mobile Modal -->
+<div class="modal fade" id="mMobile" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content bg-dark text-light p-3">
+  <div class="modal-header border-0"><h5 class="modal-title">Mobile App Testing</h5><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <ul>
+      <li>Static analysis and code review where available</li>
+      <li>Dynamic run-time testing and insecure storage checks</li>
+      <li>Network traffic analysis and reverse engineering when required</li>
+    </ul>
+  </div>
+</div></div></div>
+
+<!-- Code Modal -->
+<div class="modal fade" id="mCode" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content bg-dark text-light p-3">
+  <div class="modal-header border-0"><h5 class="modal-title">Source Code Review</h5><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <ul>
+      <li>Manual review for logic flaws and insecure patterns</li>
+      <li>Tool-assisted SAST run and triage</li>
+      <li>Secrets detection and dependency vulnerability checks</li>
+    </ul>
+  </div>
+</div></div></div>
+
+<!-- Red Team Modal -->
+<div class="modal fade" id="mRed" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content bg-dark text-light p-3">
+  <div class="modal-header border-0"><h5 class="modal-title">Red Team Operations</h5><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <ul>
+      <li>Adversary emulation and attack path development</li>
+      <li>Scan your website for exposed credentials lurking on the dark web</li>
+      <li>Phishing, social engineering and physical security (optional)</li>
+      <li>Persistence, Lateral movement, Data exfiltration proof-of-concept</li>
+    </ul>
+  </div>
+</div></div></div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+  // Year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Typed.js for hero
+  new Typed('#typed', {
+    strings: ['Web Application Testing','Network Assessments','Mobile Testing','Source Code Reviews','Red Team Exercises'],
+    typeSpeed: 60,
+    backSpeed: 35,
+    backDelay: 1400,
+    loop: true
+  });
+
+  // Particles
+  if(window.particlesJS){
+    particlesJS('particles-js',{
+      "particles": {
+        "number": { "value": 60, "density": { "enable": true, "value_area": 700 } },
+        "color": { "value": "#00ff88" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.08 },
+        "size": { "value": 3 },
+        "line_linked": { "enable": true, "distance": 130, "color": "#00ff88", "opacity": 0.06, "width": 1 },
+        "move": { "enable": true, "speed": 1.6 }
+      },
+      "interactivity": {
+        "detect_on":"canvas",
+        "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": false } },
+        "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.14 } } }
+      },
+      "retina_detect": true
+    });
+  }
+
+  // AOS init
+  AOS.init({ duration:700, once:true });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(el=>{
+    el.addEventListener('click', function(e){
+      const target = document.querySelector(this.getAttribute('href'));
+      if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // Simple counter animation
+  const counters = document.querySelectorAll('.counter');
+  const runCounter = (el) => {
+    const target = +el.getAttribute('data-target');
+    const duration = 1400;
+    let start = 0;
+    const stepTime = Math.max(Math.floor(duration / target), 6);
+    const timer = setInterval(()=> {
+      start += Math.max(1, Math.floor(target / (duration/stepTime)));
+      if(start >= target){ start = target; clearInterval(timer); }
+      el.textContent = start;
+    }, stepTime);
+  };
+
+  // Observe counters when visible
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const el = entry.target;
+        if(!el.dataset.started){ runCounter(el); el.dataset.started = "1"; }
+      }
+    });
+  }, {threshold: 0.6});
+  counters.forEach(c => obs.observe(c));
+
+  // Contact form (demo only) - no backend
+  (function(){
+    const form = document.getElementById('contactForm');
+    const alertBox = document.getElementById('formAlert');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!form.checkValidity()){ form.classList.add('was-validated'); return; }
+      // For demo: show success and clear
+      alertBox.style.display = 'block';
+      alertBox.className = 'alert alert-success';
+      alertBox.textContent = 'Thanks — message received (demo). We will reply to you at ' + document.getElementById('email').value;
+      form.reset();
+      form.classList.remove('was-validated');
+      setTimeout(()=> alertBox.style.display='none', 7000);
+    });
+  })();
+
+</script>
+</body>
+</html>
